@@ -13,6 +13,8 @@ public class AppConfig {
 	@Value("${jwt.secret}")
 	private String jwtSecret;
 	
+	//Metódo para codificar as Senhas
+	
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();

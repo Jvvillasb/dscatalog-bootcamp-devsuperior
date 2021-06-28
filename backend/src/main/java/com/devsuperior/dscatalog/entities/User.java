@@ -34,12 +34,15 @@ public class User implements UserDetails, Serializable {
 	private String firstName;
 	private String lastName;
 	
-	@Column(unique = true)
+	
+	@Column(unique = true) //Não vai poder se repetir
 	private String email;
 	private String password;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "tb_user_role",
+	//Mapeamento Objeto Relacional
+	
+	@ManyToMany(fetch = FetchType.EAGER) //EAGER serve para forçar que sempre quando for buscar um usuário no banco
+	@JoinTable(name = "tb_user_role",    //vai vir junto com ele os roles -> perfis do usuário
 		joinColumns = @JoinColumn(name = "user_id"),
 		inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();

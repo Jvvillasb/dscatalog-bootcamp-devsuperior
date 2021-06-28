@@ -15,11 +15,11 @@ public class UserDTO implements Serializable{
 
 	private Long id;
 	
-	@NotBlank(message = "Campo Obrigatório")
+	@NotBlank(message = "Campo Obrigatório") 
 	private String firstName;
 	private String lastName;
 	
-	@Email(message = "Favor entrar com um e-mail Válido")
+	@Email(message = "Favor entrar com um e-mail Válido") 
 	private String email;
 
 	Set<RoleDTO> roles = new HashSet<>();

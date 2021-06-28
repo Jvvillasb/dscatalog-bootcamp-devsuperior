@@ -2,6 +2,9 @@ package com.devsuperior.dscatalog.dto;
 
 import com.devsuperior.dscatalog.services.validation.UserInsertValid;
 
+//Classe Criada para trafegarmos a senha apenas na inserção de Usuarios
+
+//Anotation criada personalizada
 @UserInsertValid
 public class UserInsertDTO extends UserDTO {
 

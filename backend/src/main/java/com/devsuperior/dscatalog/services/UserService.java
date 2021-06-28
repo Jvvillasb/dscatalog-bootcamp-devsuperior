@@ -30,7 +30,6 @@ import com.devsuperior.dscatalog.services.exceptions.DatabaseException;
 import com.devsuperior.dscatalog.services.exceptions.ResourceNotFoundException;
 
 
-
 @Service
 public class UserService implements UserDetailsService {
 	
@@ -110,6 +109,8 @@ public class UserService implements UserDetailsService {
 	}
 
 
+	//Metódo para Logar
+	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		

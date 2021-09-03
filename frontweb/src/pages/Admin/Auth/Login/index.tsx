@@ -5,7 +5,7 @@ import { getAuthData, requestBackendLogin, saveAuthData } from 'util/requests';
 import { useState } from 'react';
 
 import './styles.css';
-import { Z_ASCII } from 'zlib';
+
 
 type FormData = {
   username: string;

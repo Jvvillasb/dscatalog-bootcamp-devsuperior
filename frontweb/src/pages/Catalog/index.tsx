@@ -1,9 +1,8 @@
 import ProductCard from 'components/ProductCard';
-import { Product } from 'types/products';
+import { Product } from 'types/product';
 import { Link } from 'react-router-dom';
 import Pagination from 'components/Pagination';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { SpringPage } from 'types/vendor/spring';
 import { requestBackend } from 'util/requests';
 import { AxiosRequestConfig } from 'axios';
@@ -13,7 +12,7 @@ import './styles.css';
 
 const Catalog = () => {
   const [page, setPage] = useState<SpringPage<Product>>();
-  const [isLoading, setisLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const params: AxiosRequestConfig = {
@@ -22,16 +21,16 @@ const Catalog = () => {
       params: {
         page: 0,
         size: 12,
-      }, 
+      }
     };
 
-    setisLoading(true);
+    setIsLoading(true);
     requestBackend(params)
       .then((response) => {
         setPage(response.data);
       })
-      .finally(() =>{
-        setisLoading(false);
+      .finally(() => {
+        setIsLoading(false);
       });
   }, []);
 
@@ -42,7 +41,7 @@ const Catalog = () => {
       </div>
 
       <div className="row">
-        {isLoading ? <CardLoader/> : (
+        {isLoading ? <CardLoader /> : (
           page?.content.map((product) => (
           <div className="col-sm-6 col-lg-4 col-xl-3" key={product.id}>
             <Link to="/products/1">

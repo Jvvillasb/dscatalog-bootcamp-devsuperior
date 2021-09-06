@@ -1,18 +1,30 @@
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import ButtonIcon from 'components/ButtonIcon';
 import { useForm } from 'react-hook-form';
-import { getAuthData, requestBackendLogin, saveAuthData } from 'util/requests';
-import { useState } from 'react';
+import { requestBackendLogin } from 'util/requests';
+import { useContext, useState } from 'react';
+import { AuthContext } from 'AuthContext';
+import { saveAuthData } from 'util/storage';
+import { getTokenData } from 'util/auth';
 
 import './styles.css';
-
 
 type FormData = {
   username: string;
   password: string;
 };
 
+type LocationState = {
+  from: string;
+}
+
 const Login = () => {
+
+  const location = useLocation<LocationState>();
+
+  const { from } = location.state || { from: { pathname: '/admin' } };
+
+  const { setAuthContextData } = useContext(AuthContext);
 
   const [hasError, setHasError] = useState(false);
 
@@ -24,11 +36,12 @@ const Login = () => {
     requestBackendLogin(formData)
       .then((response) => {
         saveAuthData(response.data);
-        const token = getAuthData().access_token;
-        console.log('Token Gerado: ' + token);
         setHasError(false);
-        console.log('SUCESSO', response);
-        history.push('/admin');
+        setAuthContextData({
+          authenticated: true,
+          tokenData: getTokenData(),
+        })
+        history.replace(from);
       })
       .catch((error) => {
         setHasError(true);
@@ -39,16 +52,14 @@ const Login = () => {
   return (
     <div className="base-card login-card">
       <h1>LOGIN</h1>
-      { hasError && (
-        <div className="alert alert-danger">
-        Erro ao tentar efetuar o Login
-      </div>
+      {hasError && (
+        <div className="alert alert-danger">Erro ao tentar efetuar o login</div>
       )}
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-4">
           <input
-            {...register('username',{
-              required: 'Campo Obrigatório',
+            {...register('username', {
+              required: 'Campo obrigatório',
               pattern: {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                 message: 'Email inválido'
@@ -64,7 +75,7 @@ const Login = () => {
         <div className="mb-2">
           <input
             {...register('password', {
-              required: 'Campo Obrigatório',
+              required: 'Campo obrigatório'
             })}
             type="password"
             className={`form-control base-input ${errors.password ? 'is-invalid' : ''}`}

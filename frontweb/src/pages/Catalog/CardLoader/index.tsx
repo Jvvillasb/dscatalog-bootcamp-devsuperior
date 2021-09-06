@@ -7,13 +7,10 @@ const CardLoader = () => (
       width={320}
       height={460}
       viewBox="0 0 320 460"
-      backgroundColor="#bbb"
-      foregroundColor="#acabab"
+      backgroundColor="#ecebeb"
+      foregroundColor="#d6d2d2"
     >
-      <circle cx="31" cy="31" r="15" />
-      <rect x="0" y="0" rx="2" ry="2" width="300" height="10" />
-      <rect x="0" y="0" rx="2" ry="2" width="300" height="10" />
-      <rect x="0" y="0" rx="2" ry="2" width="300" height="400" />
+      <rect x="0" y="0" rx="2" ry="2" width="300" height="300" />
     </ContentLoader>
   </div>
 );

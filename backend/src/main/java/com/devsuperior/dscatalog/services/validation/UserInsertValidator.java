@@ -13,8 +13,6 @@ import com.devsuperior.dscatalog.entities.User;
 import com.devsuperior.dscatalog.repositories.UserRepository;
 import com.devsuperior.dscatalog.resources.exceptions.FieldMessage;
 
-//Validações para a anotation criada
-
 public class UserInsertValidator implements ConstraintValidator<UserInsertValid, UserInsertDTO> {
 	
 	@Autowired
@@ -30,15 +28,10 @@ public class UserInsertValidator implements ConstraintValidator<UserInsertValid,
 		List<FieldMessage> list = new ArrayList<>();
 		
 		User user = repository.findByEmail(dto.getEmail());
-		
-		//Validação para email existente na inserção de um Usuário
-		
-		if(user != null) {
+		if (user != null) {
 			list.add(new FieldMessage("email", "Email já existe"));
 		}
-		
-		//Insere na lista de erros do Bean validation os erros 
-		
+
 		for (FieldMessage e : list) {
 			context.disableDefaultConstraintViolation();
 			context.buildConstraintViolationWithTemplate(e.getMessage()).addPropertyNode(e.getFieldName())
@@ -47,4 +40,3 @@ public class UserInsertValidator implements ConstraintValidator<UserInsertValid,
 		return list.isEmpty();
 	}
 }
-

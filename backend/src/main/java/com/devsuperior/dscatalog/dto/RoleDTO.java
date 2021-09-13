@@ -4,26 +4,25 @@ import java.io.Serializable;
 
 import com.devsuperior.dscatalog.entities.Role;
 
-public class RoleDTO implements Serializable{
-	
+public class RoleDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	private Long id;
-	private String authoriry;
+	private String authority;
 	
 	public RoleDTO() {
 	}
-	
-	public RoleDTO(Long id, String authoriry) {
+
+	public RoleDTO(Long id, String authority) {
 		super();
 		this.id = id;
-		this.authoriry = authoriry;
+		this.authority = authority;
 	}
 
 	public RoleDTO(Role role) {
 		super();
 		id = role.getId();
-		authoriry = role.getAuthority();
+		authority = role.getAuthority();
 	}
 	
 	public Long getId() {
@@ -34,14 +33,11 @@ public class RoleDTO implements Serializable{
 		this.id = id;
 	}
 
-	public String getAuthoriry() {
-		return authoriry;
+	public String getAuthority() {
+		return authority;
 	}
 
-	public void setAuthoriry(String authoriry) {
-		this.authoriry = authoriry;
+	public void setAuthority(String authority) {
+		this.authority = authority;
 	}
-	
-	
-
 }

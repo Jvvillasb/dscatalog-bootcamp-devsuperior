@@ -13,27 +13,24 @@ import org.springframework.stereotype.Component;
 import com.devsuperior.dscatalog.entities.User;
 import com.devsuperior.dscatalog.repositories.UserRepository;
 
-//Serve para adicionar parametros para o token
-
 @Component
-public class JwtTokenEnhancer implements TokenEnhancer{
-	
+public class JwtTokenEnhancer implements TokenEnhancer {
+
 	@Autowired
 	private UserRepository userRepository;
-
+	
 	@Override
 	public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
-		
+
 		User user = userRepository.findByEmail(authentication.getName());
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("userFirstName", user.getFirstName());
-		map.put("UserId", user.getId());
-		
+		map.put("userId", user.getId());
+
 		DefaultOAuth2AccessToken token = (DefaultOAuth2AccessToken) accessToken;
 		token.setAdditionalInformation(map);
 		
 		return accessToken;
 	}
-
 }

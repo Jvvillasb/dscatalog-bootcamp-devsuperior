@@ -17,10 +17,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tb_category")
-public class Category implements Serializable{
-
+public class Category implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -28,16 +27,14 @@ public class Category implements Serializable{
 	
 	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private Instant createdAt;
-	
+
 	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private Instant updatedAt;
-	
-	//Relacionamento Biderecional
-	
+
 	@ManyToMany(mappedBy = "categories")
 	private Set<Product> products = new HashSet<>();
 	
-	public Category(){
+	public Category() {
 	}
 
 	public Category(Long id, String name) {
@@ -64,11 +61,11 @@ public class Category implements Serializable{
 	public Instant getCreatedAt() {
 		return createdAt;
 	}
-	
+
 	public Instant getUpdatedAt() {
 		return updatedAt;
 	}
-	
+
 	@PrePersist
 	public void prePersist() {
 		createdAt = Instant.now();
@@ -78,11 +75,11 @@ public class Category implements Serializable{
 	public void preUpdate() {
 		updatedAt = Instant.now();
 	}
-	
+
 	public Set<Product> getProducts() {
 		return products;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -107,7 +104,4 @@ public class Category implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
-	
 }

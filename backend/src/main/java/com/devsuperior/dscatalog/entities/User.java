@@ -23,31 +23,26 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Table(name = "tb_user")
-public class User implements UserDetails, Serializable {	
-
+public class User implements UserDetails, Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
 	private String firstName;
 	private String lastName;
 	
-	
-	@Column(unique = true) //Não vai poder se repetir
+	@Column(unique = true)
 	private String email;
 	private String password;
 	
-	//Mapeamento Objeto Relacional
-	
-	@ManyToMany(fetch = FetchType.EAGER) //EAGER serve para forçar que sempre quando for buscar um usuário no banco
-	@JoinTable(name = "tb_user_role",    //vai vir junto com ele os roles -> perfis do usuário
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "tb_user_role",
 		joinColumns = @JoinColumn(name = "user_id"),
-		inverseJoinColumns = @JoinColumn(name = "role_id"))
+		inverseJoinColumns = @JoinColumn(name = "role_id"))	
 	private Set<Role> roles = new HashSet<>();
 	
-	public User(){
+	public User() {
 	}
 
 	public User(Long id, String firstName, String lastName, String email, String password) {
@@ -130,7 +125,8 @@ public class User implements UserDetails, Serializable {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return roles.stream().map(role -> new SimpleGrantedAuthority(role.getAuthority())).collect(Collectors.toList());
+		return roles.stream().map(role -> new SimpleGrantedAuthority(role.getAuthority()))
+				.collect(Collectors.toList());
 	}
 
 	@Override
@@ -157,6 +153,4 @@ public class User implements UserDetails, Serializable {
 	public boolean isEnabled() {
 		return true;
 	}
-
-	
 }
